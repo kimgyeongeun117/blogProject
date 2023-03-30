@@ -3,6 +3,7 @@
 <%@page import="java.util.*" %>
 <!-- JSTL사용 라이브러리 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
     <!-- 글목록 -->
 <!DOCTYPE html>
 <html lang="en">

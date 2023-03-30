@@ -1,18 +1,25 @@
 package com.kim.blog.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.kim.blog.dto.UserDTO;
+import com.kim.blog.service.LoginService;
 
 @WebServlet("/LoginController")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     public LoginController() {
-        super();
+    	
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -20,6 +27,34 @@ public class LoginController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		LoginService loginService = new LoginService();
+		UserDTO userDto = null;
+		HttpSession session = request.getSession();
+		//RequestDispatcher dispatcher = request.getRequestDispatcher("/IndexController");
+		
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		userDto = loginService.selectUser(email, password);
+		String username = userDto.getName();
+		String userPassword = userDto.getPassword();
+		String logstatus = null;
+		
+		if(userDto != null) {
+			request.setAttribute("action", "login");
+			session.setAttribute("username", username);
+			session.setAttribute("password", userPassword);
+			logstatus = "login";
+			session.setAttribute("logstatus", logstatus);
+	        //dispatcher.forward(request, response);
+			response.sendRedirect("IndexController");
+	        System.out.println("1111111");
+		}else {
+			out.print("<script>alert('로그인에 실패했습니다'); location.href='login.jsp'</script>");
+		}
 		
 	}
 

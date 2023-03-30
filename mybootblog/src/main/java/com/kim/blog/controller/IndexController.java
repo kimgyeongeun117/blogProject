@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kim.blog.dao.BoardDAO;
 import com.kim.blog.dto.BoardDTO;
@@ -20,7 +21,6 @@ public class IndexController extends HttpServlet {
        
     
     public IndexController() {
-        super();
     }
 
 	
@@ -30,7 +30,7 @@ public class IndexController extends HttpServlet {
         
         ArrayList<BoardDTO> result = dao.select();
         request.setAttribute("list", result);
-        
+       
         RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
 	}
