@@ -63,8 +63,8 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
-                            <h1>경은 Blog</h1>
-                            <span class="subheading">A Blog Theme by 경은</span>
+                            <h1><%=username %> Blog</h1>
+                            <span class="subheading">A Blog Theme by <%=username %></span>
                         </div>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                     <!-- Post preview  반복 필요-->
                     <c:forEach var="list"  items="${list}">
                     	<div class="post-preview">
-                        	<a href="PostController?title=${list.title }&description=${list.description}&createdAt=${list.createdAt}" >
+                        	<a href="PostController?title=${list.title }&board_id=${list.id }&user_id=${list.user_id }&category_id=${list.category_id }&description=${list.description}&createdAt=${list.createdAt}" >
                             	<h2 class="post-title">${list.title }</h2>
                         	</a>
                         	<p class="post-meta">

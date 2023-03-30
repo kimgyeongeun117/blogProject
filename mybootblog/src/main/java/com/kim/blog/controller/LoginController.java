@@ -42,16 +42,16 @@ public class LoginController extends HttpServlet {
 		String username = userDto.getName();
 		String userPassword = userDto.getPassword();
 		String logstatus = null;
-		
+		int user_id = userDto.getId();
 		if(userDto != null) {
 			request.setAttribute("action", "login");
 			session.setAttribute("username", username);
 			session.setAttribute("password", userPassword);
+			session.setAttribute("user_id", user_id);
 			logstatus = "login";
 			session.setAttribute("logstatus", logstatus);
 	        //dispatcher.forward(request, response);
 			response.sendRedirect("IndexController");
-	        System.out.println("1111111");
 		}else {
 			out.print("<script>alert('로그인에 실패했습니다'); location.href='login.jsp'</script>");
 		}

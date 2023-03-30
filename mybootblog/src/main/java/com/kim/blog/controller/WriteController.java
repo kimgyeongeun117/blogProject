@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kim.blog.dao.BoardDAO;
 import com.kim.blog.dto.BoardDTO;
@@ -41,10 +42,11 @@ public class WriteController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
 		int responseCount = 0;
 		BoardDAO dao = new BoardDAO();
 		//아이디 임시 지정
-		int user_id = 1;
+		int user_id = (int)session.getAttribute("user_id");
 		String category_id = request.getParameter("category_id");
 		String action = request.getParameter("action");
 		String title = request.getParameter("title");

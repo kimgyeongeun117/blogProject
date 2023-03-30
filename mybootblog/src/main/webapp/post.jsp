@@ -3,6 +3,17 @@
 <%@page import="java.util.*" %>
 <!-- JSTL사용 라이브러리 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+	String username = (String)session.getAttribute("username");
+	String password = (String)session.getAttribute("password");
+	int user_id = (int)session.getAttribute("user_id");
+	String post_user_id = (String)request.getAttribute("user_id");
+	
+    if(username == null && password == null) {
+    	out.println("<script>alert('로그인이 필요합니다'); location.href='login.jsp'</script>");
+    }
+    
+%>
 
     <!-- 글목록 -->
 <!DOCTYPE html>
@@ -37,7 +48,12 @@
                     	<!-- <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.jsp">About</a></li> -->
                     	<!-- <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.jsp">Post</a></li> -->
                     	<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="WriteController">Write</a></li>
-                    	<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="login.jsp">login</a></li>
+                    		<% if(session.getAttribute("logstatus") == null) {%>
+                    			<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="login.jsp">login</a></li>
+                    		<% }%>
+                    		<% if(session.getAttribute("logstatus") != null) {%>
+                    			<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="login.jsp">logout</a></li>
+                    		<% }%>
                     </ul>
                 </div>
             </div>
@@ -65,6 +81,12 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         	<p><c:out value="${description }"/></p>
+                        	<div>
+                        	<%if(post_user_id.equals(user_id+"")) {%>
+                        		<button class="btn btn-primary text-uppercase"
+									id="submitButton" type="submit"  style="margin: 20px 0px">수정</button>
+							<%} %>
+                        	</div>
                             Placeholder text by
                             <a href="http://spaceipsum.com/">Space Ipsum</a>
                             &middot; Images by
