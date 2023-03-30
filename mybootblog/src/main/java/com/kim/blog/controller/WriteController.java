@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kim.blog.dao.BoardDAO;
 import com.kim.blog.dto.BoardDTO;
+import com.kim.blog.dto.CategoryDTO;
+import com.kim.blog.service.WriteService;
 
 
 @WebServlet("/WriteController")
@@ -25,8 +27,14 @@ public class WriteController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String user_id = request.getParameter("user_id");
-		request.setAttribute("user_id",user_id);
+//		String user_id = request.getParameter("user_id");
+		WriteService writeService = new WriteService();
+		System.out.println("get");
+		
+//		request.setAttribute("user_id",user_id);
+		ArrayList<CategoryDTO> list = writeService.selectCategory();
+		request.setAttribute("list",list);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/write.jsp");
 		dispatcher.forward(request, response);
 	}

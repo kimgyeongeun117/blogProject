@@ -32,7 +32,7 @@
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
 		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="index.jsp">경은 게시판</a>
+			<a class="navbar-brand" href="IndexController">경은 게시판</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
 				aria-controls="navbarResponsive" aria-expanded="false"
@@ -41,10 +41,10 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ms-auto py-4 py-lg-0">
-					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.jsp">Home</a></li>
+					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="IndexController">Home</a></li>
                     <!-- <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.jsp">About</a></li> -->
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.jsp">Post</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="write.jsp">Write</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.jsp">Post</a></li> -->
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="WriteController">Write</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="login.jsp">login</a></li>
 				</ul>
 			</div>
@@ -74,12 +74,11 @@
 							<p>카테고리</p>
 							<div class="" style="margin:10px">
 								<select name="category_id" class="form-select" aria-label="Default select example"  >
-									<option value="1"  selected="selected">운동</option>
-									<option value="2" >Two</option>
-									<option value="3"  >Three</option>
-									<option value="4"  >Four</option>
-									<option value="5"  >Five</option>
-									<option value="6"  >Six</option>
+									<c:set var="count" value="0"/>
+									<c:forEach var="list" items="${list }">
+										<c:set var="count" value="${count+1 }"></c:set>
+										<option value="${count }" >${list.name}</option>
+									</c:forEach>
 								</select>
 							</div>
 							<div class="form-floating">

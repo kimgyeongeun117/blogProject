@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.*" %>
+<!-- JSTL사용 라이브러리 -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- 로그인 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +32,7 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="index.jsp" style="color:#f4623a;">home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="IndexController" style="color:#f4623a;">home</a></li>
                     </ul>
                 </div>
             </div>
@@ -45,7 +48,7 @@
                 </div>
                 <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
                     <div class="col-lg-6">
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN"  name="signUp">
+                        <form id="contactForm" data-sb-form-api-token="API_TOKEN"  name="login"  action="/mybootblog/LoginController?action=login" method="post">
                             <!-- Name input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
@@ -59,7 +62,7 @@
                                 <div class="invalid-feedback" data-sb-feedback="password:required">Password is required.</div>
                             </div>
                             <!-- Submit success message-->
-                            <div class="d-none" id="submitSuccessMessage">
+                            <!-- <div class="d-none" id="submitSuccessMessage">
                                 <div class="text-center mb-3">
                                     <div class="fw-bolder">Form submission successful!</div>
                                     To activate this form, sign up at
@@ -67,10 +70,13 @@
                                     <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
                                 </div>
                             </div>
-                            <!-- Submit error message-->
-                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                            Submit error message
+                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div> -->
                             <!-- Submit Button-->
-                            <div class="d-grid"><button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">login</button></div>
+                            <div class="d-grid"><button class="btn btn-primary btn-xl " id="submitButton" type="submit">login</button></div>
+                        </form>
+                        <form id="contactForm" data-sb-form-api-token="API_TOKEN"  name="login" action="SignUpController?action=signup" method="post"  style="display:flex; justify-content: center">
+                            <div class="d-grid" style="margin-top: 20px ; width:300px;"><button class="btn btn-primary btn-xl " id="submitButton" type="submit">SignUp</button></div>
                         </form>
                     </div>
                 </div>
