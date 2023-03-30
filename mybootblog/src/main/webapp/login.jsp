@@ -75,7 +75,7 @@
                             <!-- Submit Button-->
                             <div class="d-grid"><button class="btn btn-primary btn-xl " id="submitButton" type="submit">login</button></div>
                         </form>
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN"  name="login" action="SignUpController?action=signup" method="post"  style="display:flex; justify-content: center">
+                        <form id="contactForm" data-sb-form-api-token="API_TOKEN"  name="login" action="/mybootblog/signup.jsp" method="post"  style="display:flex; justify-content: center">
                             <div class="d-grid" style="margin-top: 20px ; width:300px;"><button class="btn btn-primary btn-xl " id="submitButton" type="submit">SignUp</button></div>
                         </form>
                     </div>

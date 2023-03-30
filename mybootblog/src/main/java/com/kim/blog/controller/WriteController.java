@@ -58,7 +58,7 @@ public class WriteController extends HttpServlet {
 			if(responseCount!=0) {
 				response.sendRedirect("IndexController");
 			}else {
-				out.print("<script>alert('글 작성에 실패했습니다'); location.href='write.jsp'</script>");
+				out.print("<script>alert('글 작성에 실패했습니다'); location.href='WriteController'</script>");
 			}
 		}
 	}

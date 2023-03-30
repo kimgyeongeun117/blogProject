@@ -8,11 +8,13 @@ public class UserDTO {
 	 private String phoneNumber;
 	 private String createdAt;
 	 
-	public UserDTO(String name, String email, String password, String phoneNumber) {
+	public UserDTO(int id,String name, String email, String password, String phoneNumber,String createdAt) {
+		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.phoneNumber = phoneNumber;
+		this.createdAt = createdAt;
 	}
 	
 	public int getId() {
