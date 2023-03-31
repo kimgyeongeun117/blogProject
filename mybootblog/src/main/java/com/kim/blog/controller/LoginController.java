@@ -39,11 +39,11 @@ public class LoginController extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		userDto = loginService.selectUser(email, password);
-		String username = userDto.getName();
-		String userPassword = userDto.getPassword();
 		String logstatus = null;
-		int user_id = userDto.getId();
 		if(userDto != null) {
+			String username = userDto.getName();
+			String userPassword = userDto.getPassword();
+			int user_id = userDto.getId();
 			request.setAttribute("action", "login");
 			session.setAttribute("username", username);
 			session.setAttribute("password", userPassword);

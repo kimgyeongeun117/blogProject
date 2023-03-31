@@ -41,7 +41,7 @@
             <div class="container px-4 px-lg-5" >
                 <div class="row gx-4 gx-lg-5 justify-content-center" >
                     <div class="col-lg-8 col-xl-6 text-center" >
-                        <h2 class="mt-0" style="margin-bottom: 50px">로그인</h2>
+                        <h2 class="mt-0" style="margin-bottom: 50px">게시판 로그인</h2>
                         
                     </div>
                 </div>

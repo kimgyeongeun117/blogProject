@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kim.blog.dao.BoardDAO;
+import com.kim.blog.dao.UserDAO;
 import com.kim.blog.dto.BoardDTO;
 import com.kim.blog.dto.CategoryDTO;
 import com.kim.blog.service.WriteService;
@@ -45,6 +46,8 @@ public class WriteController extends HttpServlet {
 		HttpSession session = request.getSession();
 		int responseCount = 0;
 		BoardDAO dao = new BoardDAO();
+		UserDAO userdao = new UserDAO();
+		
 		//아이디 임시 지정
 		int user_id = (int)session.getAttribute("user_id");
 		String category_id = request.getParameter("category_id");
@@ -53,10 +56,11 @@ public class WriteController extends HttpServlet {
 		String description = request.getParameter("description");
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
+		String userName = userdao.selectbyuserid(user_id);
 		
-		System.out.println(action+","+title+","+description+","+category_id);
+		System.out.println(userName+","+action+","+title+","+description+","+category_id);
 		if(action.equals("insert")) {
-			responseCount = dao.insert(user_id,title,description,Integer.parseInt(category_id));
+			responseCount = dao.insert(userName,user_id,title,description,Integer.parseInt(category_id));
 			if(responseCount!=0) {
 				response.sendRedirect("IndexController");
 			}else {

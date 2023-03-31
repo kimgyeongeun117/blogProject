@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -217,7 +217,7 @@ a:hover{
 						<i class="fa fa-home"></i><span>404</span>
 					</div>
 					<span class="inner-status">Oops! You're lost</span> <span
-						class="inner-detail"> ÆäÀÌÁö¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.
+						class="inner-detail"> í˜ì´ì§€ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.
 						<p><a href="IndexController" class="btn btn-info mtl"><i
 							class="fa fa-home"></i>&nbsp; Return home </a></p>
 					</span>

@@ -41,7 +41,7 @@
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
 		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="IndexController"><c:out value="${session.session }"/><%=username %> 게시판</a>
+			<a class="navbar-brand" href="IndexController"><c:out value="${session.session }"/>경은 게시판</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
 				aria-controls="navbarResponsive" aria-expanded="false"
@@ -71,7 +71,7 @@
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="page-heading">
-						<h1>글 쓰기</h1>
+						<h1>글 수정</h1>
 					</div>
 				</div>
 			</div>
@@ -84,28 +84,29 @@
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="my-5">
 					<!-- 본체 -->
-						<form id="contactForm" data-sb-form-api-token="API_TOKEN"  action="/mybootblog/WriteController?action=insert" method="post">
+						<form id="contactForm" data-sb-form-api-token="API_TOKEN"  action="/mybootblog/UpdateController?action=update" method="post">
 							<p>카테고리</p>
 							<div class="" style="margin:10px">
 								<select name="category_id" class="form-select" aria-label="Default select example"  >
 									<c:set var="count" value="0"/>
-									<c:forEach var="list" items="${list }">
+									<c:forEach var="list" items="${categoryList }">
 										<c:set var="count" value="${count+1 }"></c:set>
 										<option value="${count }" >${list.name}</option>
 									</c:forEach>
 								</select>
 							</div>
 							<div class="form-floating">
-								<input class="form-control" id="title" type="text" name="title"
+								<input type="text" style="display: none" name="board_id"  value="${board.id }"/>
+								<input class="form-control" id="title" type="text" name="title" value="${board.title }"
 									placeholder="Enter your title..." data-sb-validations="required" />
 								<label for="title">글제목</label>
 								<div class="invalid-feedback" data-sb-feedback="title:required">A
 									title is required.</div>
 							</div>
 							<div class="form-floating">
-								<textarea class="form-control" id="description" name="description"
-									placeholder="Enter your message here..." style="height: 12rem"
-									data-sb-validations="required"></textarea>
+								<textarea class="form-control" id="description" name="description"  
+								placeholder="Enter your message here..." style="height: 12rem"
+									data-sb-validations="required">${board.description}</textarea>
 								<label for="description">글내용</label>
 								<div class="invalid-feedback"
 									data-sb-feedback="description:required">A message is
@@ -128,7 +129,7 @@
 							<!-- Submit Button-->
 							<button class="btn btn-primary text-uppercase"
 								id="submitButton" type="submit" >작성</button>
-							<span style="color: red">${fail}</span>
+							<%-- <span style="color: red">${fail}</span> --%>
 						</form>
 					</div>
 				</div>

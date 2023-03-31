@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kim.blog.dao.BoardDAO;
+import com.kim.blog.dao.UserDAO;
 import com.kim.blog.dto.BoardDTO;
 
 
@@ -26,7 +27,8 @@ public class IndexController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BoardDAO dao = new BoardDAO();
-        /* String action = request.getParameter("action"); */
+        UserDAO userdao = new UserDAO();
+        HttpSession session = request.getSession();
         
         ArrayList<BoardDTO> result = dao.select();
         request.setAttribute("list", result);
@@ -37,7 +39,15 @@ public class IndexController extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		BoardDAO dao = new BoardDAO();
+		String search = request.getParameter("search");
 		
+		ArrayList<BoardDTO> result = dao.selectbysearch(search);
+		request.setAttribute("list", result);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

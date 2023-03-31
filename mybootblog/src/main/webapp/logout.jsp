@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%
-	session.invalidate(); // ·Î±×¾Æ¿ô -> ¼¼¼Ç ¸Þ¸ð¸®¿¡¼­ ÇØÁ¦ 
-	response.sendRedirect("login.jsp"); // ·Î±×¾Æ¿ô ÀÌÈÄ ÆäÀÌÁö ÀÌµ¿ 
+	session.invalidate(); // ë¡œê·¸ì•„ì›ƒ -> ì„¸ì…˜ ë©”ëª¨ë¦¬ì—ì„œ í•´ì œ 
+	response.sendRedirect("login.jsp"); // ë¡œê·¸ì•„ì›ƒ ì´í›„ íŽ˜ì´ì§€ ì´ë™ 
 %>

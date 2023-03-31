@@ -3,19 +3,31 @@ package com.kim.blog.dto;
 public class BoardDTO {
 
 	private int id;
+	private String userName;
 	private int user_id;
 	private String title;
 	private String description;
 	private int category_id;
 	private String createdAt;
 	
-	public BoardDTO(int id, int user_id, String title, String description, int category_id,String createdAt) {
+	public BoardDTO(int id, String userName, int user_id, String title, String description, int category_id,
+			String createdAt) {
+		super();
 		this.id = id;
+		this.userName = userName;
 		this.user_id = user_id;
 		this.title = title;
 		this.description = description;
 		this.category_id = category_id;
 		this.createdAt = createdAt;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	public String getCreatedAt() {
