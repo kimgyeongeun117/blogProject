@@ -33,7 +33,6 @@ public class WriteDAO {
 				String name = rs.getString("name");
 				
 				CategoryDTO dto = new CategoryDTO(id, name);
-				System.out.println(dto);
 				list.add(dto);
 			}
 			
