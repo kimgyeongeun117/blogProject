@@ -56,11 +56,11 @@ public class UpdateController extends HttpServlet {
 			String title = request.getParameter("title");
 			String description = request.getParameter("description");
 			int category_id = Integer.parseInt(request.getParameter("category_id"));
-			System.out.println(user_id+","+category_id+","+title+","+description);
+			
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			
 			int responseCount = dao.update(board_id,user_id, title, description, category_id);
+			
 			System.out.println(responseCount);
 			if(responseCount!=0) {
 				response.sendRedirect("IndexController");

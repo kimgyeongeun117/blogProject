@@ -31,7 +31,6 @@ public class LoginController extends HttpServlet {
 		LoginService loginService = new LoginService();
 		UserDTO userDto = null;
 		HttpSession session = request.getSession();
-		//RequestDispatcher dispatcher = request.getRequestDispatcher("/IndexController");
 		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -50,7 +49,7 @@ public class LoginController extends HttpServlet {
 			session.setAttribute("user_id", user_id);
 			logstatus = "login";
 			session.setAttribute("logstatus", logstatus);
-	        //dispatcher.forward(request, response);
+			
 			response.sendRedirect("IndexController");
 		}else {
 			out.print("<script>alert('로그인에 실패했습니다'); location.href='login.jsp'</script>");

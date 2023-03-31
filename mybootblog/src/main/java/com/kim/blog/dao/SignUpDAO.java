@@ -68,7 +68,6 @@ public class SignUpDAO {
 				
 				UserDTO dto = new UserDTO(id,userName,userEmail,password,phoneNumber,createdAt);
 				result = dto;
-				System.out.println(result);
 			}
 			
 		} catch (Exception e) {

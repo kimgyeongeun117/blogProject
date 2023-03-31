@@ -28,7 +28,7 @@ public class BoardDAO implements IBoardDAO{
 			String strQuery = "select * from board where title like ? ";
 			PreparedStatement pStmt = null;
 			ResultSet rs = null;
-			System.out.println("검색창 작동");
+			
 			try {
 				pStmt = conn.prepareStatement(strQuery);
 				pStmt.setString(1, title+"%");
@@ -45,7 +45,6 @@ public class BoardDAO implements IBoardDAO{
 					int category_id = rs.getInt("category_id");
 					
 					BoardDTO dto = new BoardDTO(id,userName,user_id,intitle,description,category_id,createdAt);
-					System.out.println(dto);
 					list.add(dto);
 				}
 				
@@ -130,7 +129,7 @@ public class BoardDAO implements IBoardDAO{
 				int category_id = rs.getInt("category_id");
 				
 				BoardDTO dto = new BoardDTO(id,userName,user_id,title,description,category_id,createdAt);
-				System.out.println(dto);
+				
 				list.add(dto);
 			}
 			

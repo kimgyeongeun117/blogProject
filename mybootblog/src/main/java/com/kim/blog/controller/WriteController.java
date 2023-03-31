@@ -29,11 +29,8 @@ public class WriteController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		String user_id = request.getParameter("user_id");
 		WriteService writeService = new WriteService();
-		System.out.println("get");
 		
-//		request.setAttribute("user_id",user_id);
 		ArrayList<CategoryDTO> list = writeService.selectCategory();
 		request.setAttribute("list",list);
 		
@@ -48,7 +45,6 @@ public class WriteController extends HttpServlet {
 		BoardDAO dao = new BoardDAO();
 		UserDAO userdao = new UserDAO();
 		
-		//아이디 임시 지정
 		int user_id = (int)session.getAttribute("user_id");
 		String category_id = request.getParameter("category_id");
 		String action = request.getParameter("action");
@@ -58,7 +54,6 @@ public class WriteController extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String userName = userdao.selectbyuserid(user_id);
 		
-		System.out.println(userName+","+action+","+title+","+description+","+category_id);
 		if(action.equals("insert")) {
 			responseCount = dao.insert(userName,user_id,title,description,Integer.parseInt(category_id));
 			if(responseCount!=0) {
