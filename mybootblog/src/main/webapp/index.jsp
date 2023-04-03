@@ -120,7 +120,7 @@
 						<c:if test="${pageNumber - 5 ge 0}">
 							<li class="page-item"><a class="page-link" name="pageButton" href="IndexController?page=previous&pageNumber=${pageNumber}">이전</a></li>
 						</c:if>
-						<c:if test="${listSize ge pageNumber + 5}">
+						<c:if test="${listSize gt pageNumber + 5}">
 						<li class="page-item"><a class="page-link"  name="pageButton" href="IndexController?page=next&pageNumber=${pageNumber}">다음</a></li>
 						</c:if>
 					</ul>

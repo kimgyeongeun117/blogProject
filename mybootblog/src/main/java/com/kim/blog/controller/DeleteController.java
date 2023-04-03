@@ -24,7 +24,6 @@ public class DeleteController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("~~~~~~~~~");
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		BoardDAO dao = new BoardDAO();

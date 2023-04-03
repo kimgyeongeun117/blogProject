@@ -111,7 +111,7 @@ public class BoardDAO implements IBoardDAO{
 	public ArrayList<BoardDTO> limitSelect(int page) {
 		ArrayList<BoardDTO> list = new ArrayList<>();
 		
-		String strQuery = "select * from board limit ?, 5; ";
+		String strQuery = "select * from board order by id limit ?, 5; ";
 		PreparedStatement pStmt = null;
 		ResultSet rs = null;
 		
