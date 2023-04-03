@@ -31,7 +31,7 @@ public class BoardDAO implements IBoardDAO{
 			
 			try {
 				pStmt = conn.prepareStatement(strQuery);
-				pStmt.setString(1, title+"%");
+				pStmt.setString(1, "%"+title+"%");
 				
 				rs = pStmt.executeQuery();
 				
@@ -43,8 +43,9 @@ public class BoardDAO implements IBoardDAO{
 					String description = rs.getString("description");
 					String createdAt = rs.getString("createdAt");
 					int category_id = rs.getInt("category_id");
+					int views = rs.getInt("views");
 					
-					BoardDTO dto = new BoardDTO(id,userName,user_id,intitle,description,category_id,createdAt);
+					BoardDTO dto = new BoardDTO(id,userName,user_id,intitle,description,category_id,createdAt,views);
 					list.add(dto);
 				}
 				
@@ -87,8 +88,9 @@ public class BoardDAO implements IBoardDAO{
 				String description = rs.getString("description");
 				String createdAt = rs.getString("createdAt");
 				int category_id = rs.getInt("category_id");
+				int views = rs.getInt("views");
 				
-				BoardDTO inDto = new BoardDTO(inId,userName,inUser_id,title,description,category_id,createdAt);
+				BoardDTO inDto = new BoardDTO(inId,userName,inUser_id,title,description,category_id,createdAt,views);
 				dto = inDto;
 			}
 			
@@ -104,6 +106,46 @@ public class BoardDAO implements IBoardDAO{
 		}
 		
 		return dto;
+	}
+	
+	public ArrayList<BoardDTO> limitSelect(int page) {
+		ArrayList<BoardDTO> list = new ArrayList<>();
+		
+		String strQuery = "select * from board limit ?, 5; ";
+		PreparedStatement pStmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pStmt = conn.prepareStatement(strQuery);
+			pStmt.setInt(1, page);
+			rs = pStmt.executeQuery();
+			while(rs.next()) {
+				String userName = rs.getString("userName");
+				int id = rs.getInt("id");
+				int user_id = rs.getInt("user_id");
+				String title = rs.getString("title");
+				String description = rs.getString("description");
+				String createdAt = rs.getString("createdAt");
+				int category_id = rs.getInt("category_id");
+				int views = rs.getInt("views");
+				
+				BoardDTO dto = new BoardDTO(id,userName,user_id,title,description,category_id,createdAt,views);
+				
+				list.add(dto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pStmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return list;
 	}
 	
 	
@@ -127,8 +169,9 @@ public class BoardDAO implements IBoardDAO{
 				String description = rs.getString("description");
 				String createdAt = rs.getString("createdAt");
 				int category_id = rs.getInt("category_id");
+				int views = rs.getInt("views");
 				
-				BoardDTO dto = new BoardDTO(id,userName,user_id,title,description,category_id,createdAt);
+				BoardDTO dto = new BoardDTO(id,userName,user_id,title,description,category_id,createdAt,views);
 				
 				list.add(dto);
 			}

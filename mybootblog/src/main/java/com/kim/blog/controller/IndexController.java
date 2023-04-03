@@ -19,19 +19,37 @@ import com.kim.blog.dto.BoardDTO;
 @WebServlet("/IndexController")
 public class IndexController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
     
     public IndexController() {
     }
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
         BoardDAO dao = new BoardDAO();
         UserDAO userdao = new UserDAO();
         HttpSession session = request.getSession();
+        int pageNumber = 0;
         
-        ArrayList<BoardDTO> result = dao.select();
+        if(request.getParameter("pageNumber")!=null) {
+        	pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+        }
+        
+        if(request.getParameter("page")!=null) {
+        	if(request.getParameter("page").equals("previous")) {
+        		pageNumber -= 5;
+        	}else if(request.getParameter("page").equals("next")) {
+        		pageNumber += 5;
+        	}
+        }
+        
+        ArrayList<BoardDTO> result = dao.limitSelect(pageNumber);
+        ArrayList<BoardDTO> list = dao.select();
+        int listSize = list.size();
+        
         request.setAttribute("list", result);
+        request.setAttribute("pageNumber", pageNumber);
+        request.setAttribute("listSize", listSize);
        
         RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);

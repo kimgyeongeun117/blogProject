@@ -3,14 +3,14 @@
 <%@page import="java.util.*"%>
 <!-- JSTL사용 라이브러리 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%
-String username = (String) session.getAttribute("username");
-String password = (String) session.getAttribute("password");
 
-if (username == null && password == null) {
-	out.println("<script>alert('로그인이 필요합니다'); location.href='login.jsp'</script>");
-}
-%>
+<c:if test="${empty username and empty password }">
+	out.println("<script>
+		alert('로그인이 필요합니다');
+		location.href = 'login.jsp'
+	</script>");
+</c:if>
+
 <!-- 홈페이지 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -41,8 +41,8 @@ if (username == null && password == null) {
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
 		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="IndexController"><%=username + "의"%>
-				게시판</a>
+			<a class="navbar-brand" href="IndexController"><c:out
+					value="${username }" />의 게시판</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
 				aria-controls="navbarResponsive" aria-expanded="false"
@@ -57,22 +57,14 @@ if (username == null && password == null) {
 					<!-- <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.jsp">Post</a></li> -->
 					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
 						href="WriteController">Write</a></li>
-					<%
-					if (session.getAttribute("logstatus") == null) {
-					%>
-					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-						href="login.jsp">login</a></li>
-					<%
-					}
-					%>
-					<%
-					if (session.getAttribute("logstatus") != null) {
-					%>
-					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-						href="logout.jsp">logout</a></li>
-					<%
-					}
-					%>
+					<c:if test="${empty logstatus}">
+						<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+							href="login.jsp">login</a></li>
+					</c:if>
+					<c:if test="${not empty logstatus}">
+						<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+							href="logout.jsp">logout</a></li>
+					</c:if>
 				</ul>
 			</div>
 		</div>
@@ -84,21 +76,24 @@ if (username == null && password == null) {
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
-						<h1><%=username%>
+						<h1>
+							<c:out value="${username }" />
 							Blog
 						</h1>
-						<span class="subheading">A Blog Theme by <%=username%></span>
+						<span class="subheading">A Blog Theme by <c:out
+								value="${username }" /></span>
 					</div>
 				</div>
 			</div>
 		</div>
 	</header>
 	<!-- Main Content-->
-	<nav class="navbar navbar-light"  style="display: flex">
-		<div class="container-fluid"  style="justify-content: center; margin-bottom: 50px">
+	<nav class="navbar navbar-light" style="display: flex">
+		<div class="container-fluid"
+			style="justify-content: center; margin-bottom: 50px">
 			<form class="d-flex" action="IndexController" method="post">
-				<input class="form-control me-2" type="search" placeholder="Search" name="search"
-					aria-label="Search">
+				<input class="form-control me-2" type="search" placeholder="Search"
+					name="search" aria-label="Search">
 				<button class="btn btn-outline-success" type="submit">Search</button>
 			</form>
 		</div>
@@ -109,18 +104,27 @@ if (username == null && password == null) {
 				<!-- Post preview  반복 필요-->
 				<c:forEach var="list" items="${list}" varStatus="status">
 					<div class="post-preview">
-						<a
-							href="PostController?title=${list.title }&board_id=${list.id }&user_id=${list.user_id }&category_id=${list.category_id }&description=${list.description}&createdAt=${list.createdAt}">
+						<a href="PostController?board_id=${list.id }&action=view">
 							<h2 class="post-title">${list.title }</h2>
 						</a>
 						<p class="post-meta">
-							Posted by <a href="#!">${list.userName}</a> on ${list.createdAt }
+							조회수:${list.views} Posted by <a href="#!">${list.userName}</a> on
+							${list.createdAt }
 						</p>
 					</div>
 					<!-- Divider-->
 					<hr class="my-4" />
 				</c:forEach>
-
+				<nav aria-label="Page navigation example">
+					<ul class="pagination">
+						<c:if test="${pageNumber - 5 ge 0}">
+							<li class="page-item"><a class="page-link" name="pageButton" href="IndexController?page=previous&pageNumber=${pageNumber}">이전</a></li>
+						</c:if>
+						<c:if test="${listSize ge pageNumber + 5}">
+						<li class="page-item"><a class="page-link"  name="pageButton" href="IndexController?page=next&pageNumber=${pageNumber}">다음</a></li>
+						</c:if>
+					</ul>
+				</nav>
 				<!-- Pager-->
 				<!-- post로 이동하는 버튼 -->
 				<!-- <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="post.jsp">Older Posts →</a></div> -->

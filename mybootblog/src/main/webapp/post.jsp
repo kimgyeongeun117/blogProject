@@ -3,17 +3,13 @@
 <%@page import="java.util.*"%>
 <!-- JSTL사용 라이브러리 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%
-	String username = (String)session.getAttribute("username");
-	String password = (String)session.getAttribute("password");
-	int user_id = (int)session.getAttribute("user_id");
-	String post_user_id = (String)request.getAttribute("user_id");
-	
-    if(username == null && password == null) {
-    	out.println("<script>alert('로그인이 필요합니다'); location.href='login.jsp'</script>");
-    }
-    
-%>
+
+<c:if test="${empty username and empty password }">
+	out.println("<script>
+		alert('로그인이 필요합니다');
+		location.href = 'login.jsp'
+	</script>");
+</c:if>
 
 <!-- 글목록 -->
 <!DOCTYPE html>
@@ -43,7 +39,8 @@
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
 		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="IndexController"><%=username %> 게시판</a>
+			<a class="navbar-brand" href="IndexController"><c:out
+					value="${username }" />의 게시판</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
 				aria-controls="navbarResponsive" aria-expanded="false"
@@ -58,14 +55,14 @@
 					<!-- <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.jsp">Post</a></li> -->
 					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
 						href="WriteController">Write</a></li>
-					<% if(session.getAttribute("logstatus") == null) {%>
-					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-						href="login.jsp">login</a></li>
-					<% }%>
-					<% if(session.getAttribute("logstatus") != null) {%>
-					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-						href="login.jsp">logout</a></li>
-					<% }%>
+					<c:if test="${empty logstatus}">
+						<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+							href="login.jsp">login</a></li>
+					</c:if>
+					<c:if test="${not empty logstatus}">
+						<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+							href="login.jsp">logout</a></li>
+					</c:if>
 				</ul>
 			</div>
 		</div>
@@ -80,7 +77,8 @@
 						<h1>
 							<c:out value="${title }" />
 						</h1>
-						<span class="meta"> Posted by <%=username %> <!-- <a href="#!">Start Bootstrap</a>
+						<span class="meta"> Posted by <c:out value="${username }" />
+							<!-- <a href="#!">Start Bootstrap</a>
                                 on August 24, 2023 -->
 						</span>
 					</div>
@@ -93,34 +91,79 @@
 		<div class="container px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
-					<form action="UpdateController?action=updatebefore" method="post">
+					<form action="UpdateController?action=updatebefore" method="post"
+						style="display: flex; flex-direction: column;">
 						<p style="border: 1px solid gray; padding: 10px">
-							<c:out  value="${description }" />
+							<c:out value="${description }" />
 						</p>
-						<input type="text" style="display: none" name="description"  value="${description }"/>
-						<input type="text" style="display: none" name="board_id"  value="${board_id }"/>
-						<div>
-							<%if(post_user_id.equals(user_id+"")) {%>
+						<input type="text" style="display: none" name="description"
+							value="${description }" /> <input type="text"
+							style="display: none" name="board_id" value="${board_id }" />
+						<div style="display: flex; justify-content: flex-end">
+							<c:set var="board_user_id" value="${board_user_id }" />
+							<c:if test="${board_user_id eq user_id }">
+								<button class="btn btn-primary text-uppercase" id="submitButton"
+									type="submit" style="margin: 10px 0px">수정</button>
+							</c:if>
+						</div>
+					</form>
+					<form action="DeleteController" method="post"
+						style="display: flex; justify-content: flex-end">
+						<c:if test="${board_user_id eq user_id }">
+							<input type="text" style="display: none" name="board_id"
+								value="${board_id }" />
 							<button class="btn btn-primary text-uppercase" id="submitButton"
-								type="submit" style="margin: 20px 0px">수정</button>
-							<%} %>
+								type="submit"
+								style="margin: 10px 0px; background-color: #F82B55">삭제</button>
+						</c:if>
 					</form>
-					
-					<form action="DeleteController"  method="post">
-						<%if(post_user_id.equals(user_id+"")) {%>
-						<input type="text" style="display: none" name="board_id"  value="${board_id }"/>
-						<button class="btn btn-primary text-uppercase" id="submitButton"
-							type="submit" style="margin: 20px 0px; background-color: #F82B55">삭제</button>
-						<%} %>
-					</form>
+
+					<p>댓글창</p>
+					<div class="card bg-light">
+						<div class="card-body">
+							<!-- Comment form-->
+							<form action="ReplyController?action=insert" method="post"
+								class="mb-4" style="display: flex; flex-direction: column;">
+								<textarea class="form-control" id="description" name="content"
+									placeholder="Enter your message here..." style="height: 6rem"
+									data-sb-validations="required"></textarea>
+								<input type="text" style="display: none" name="board_id"
+									value="${board_id }" />
+								<button class="btn btn-primary text-uppercase" id="submitButton"
+									type="submit"
+									style="background-color: #FFA479; margin: 10px 0px;">등록</button>
+							</form>
+							<!-- Comment with nested comments-->
+							<c:forEach var="list" items="${replyList }">
+								<div class="d-flex mb-4" style="display: flex;">
+									<!-- Parent comment-->
+									<div class="flex-shrink-0">
+										<img class="rounded-circle"
+											src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
+											alt="..." />
+									</div>
+									<div class="ms-3">
+										<div class="fw-bold">${list.userName }</div>
+										${list.content }
+									</div>
+									<form action="ReplyController?action=delete" method="post"
+										style="flex: 1; display: flex; justify-content: flex-end;">
+										<input type="text" style="display: none" name="reply_id"
+											value="${list.id }" /> <input type="text"
+											style="display: none" name="board_id" value="${board_id }" />
+										<c:if test="${list.user_id eq user_id }">
+											<button class="btn btn-primary text-uppercase"
+												id="submitButton" type="submit"
+												style="background-color: #930A13; border-radius: 10px;">삭제</button>
+										</c:if>
+									</form>
+								</div>
+								<!-- Single comment-->
+							</c:forEach>
+						</div>
+					</div>
 				</div>
-				Placeholder text by <a href="http://spaceipsum.com/">Space Ipsum</a>
-				&middot; Images by <a
-					href="https://www.flickr.com/photos/nasacommons/">NASA on The
-					Commons</a>
-				</p>
 			</div>
-		</div>
 		</div>
 	</article>
 	<!-- Footer-->

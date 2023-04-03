@@ -3,15 +3,11 @@
 <%@page import="java.util.*" %>
 <!-- JSTL사용 라이브러리 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-	String username = (String)session.getAttribute("username");
-    String password = (String)session.getAttribute("password");
-	
-    if(username == null && password == null) {
-    	out.println("<script>alert('로그인이 필요합니다'); location.href='login.jsp'</script>");
-    }
-    
-%>
+
+<c:if test="${empty username and empty password }">
+	out.println("<script>alert('로그인이 필요합니다'); location.href='login.jsp'</script>");
+</c:if>
+
 <!-- 글작성 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +37,7 @@
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
 		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="IndexController"><c:out value="${session.session }"/>경은 게시판</a>
+			<a class="navbar-brand" href="IndexController"><c:out value="${username }"/>의 게시판</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
 				aria-controls="navbarResponsive" aria-expanded="false"
@@ -54,12 +50,14 @@
                     <!-- <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.jsp">About</a></li> -->
                     <!-- <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.jsp">Post</a></li> -->
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="WriteController">Write</a></li>
-                    <% if(session.getAttribute("logstatus") == null) {%>
-                    	<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="login.jsp">login</a></li>
-                    <% }%>
-                    <% if(session.getAttribute("logstatus") != null) {%>
-                    	<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="login.jsp">logout</a></li>
-                    <% }%>
+                    <c:if test="${empty logstatus}">
+						<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+						href="login.jsp">login</a></li>
+					</c:if>
+					<c:if test="${not empty logstatus}">
+						<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+						href="login.jsp">logout</a></li>
+					</c:if>
 				</ul>
 			</div>
 		</div>
@@ -113,20 +111,6 @@
 									required.</div>
 							</div>
 							<br />
-							<!-- Submit success message-->
-							<!-- <div class="d-none" id="submitSuccessMessage">
-								<div class="text-center mb-3">
-									<div class="fw-bolder">Form submission successful!</div>
-									To activate this form, sign up at <br /> <a
-										href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-								</div>
-							</div> -->
-							<!-- Submit error message-->
-							<!-- <div class="d-none" id="submitErrorMessage">
-								<div class="text-center text-danger mb-3">Error sending
-									message!</div>
-							</div> -->
-							<!-- Submit Button-->
 							<button class="btn btn-primary text-uppercase"
 								id="submitButton" type="submit" >작성</button>
 							<%-- <span style="color: red">${fail}</span> --%>

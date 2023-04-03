@@ -9,10 +9,10 @@ public class BoardDTO {
 	private String description;
 	private int category_id;
 	private String createdAt;
-	
+	private int views;
+
 	public BoardDTO(int id, String userName, int user_id, String title, String description, int category_id,
-			String createdAt) {
-		super();
+			String createdAt,int views) {
 		this.id = id;
 		this.userName = userName;
 		this.user_id = user_id;
@@ -20,6 +20,15 @@ public class BoardDTO {
 		this.description = description;
 		this.category_id = category_id;
 		this.createdAt = createdAt;
+		this.views = views;
+	}
+	
+	public int getViews() {
+		return views;
+	}
+
+	public void setViews(int views) {
+		this.views = views;
 	}
 
 	public String getUserName() {
