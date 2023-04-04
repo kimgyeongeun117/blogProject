@@ -21,7 +21,7 @@ public class WriteDAO {
 	
 	public ArrayList<CategoryDTO> select() {
 		ArrayList<CategoryDTO> list = new ArrayList<>();
-		String strQuery = "select * from category; ";
+		String strQuery = "SELECT * FROM category; ";
 		PreparedStatement pStmt = null;
 		ResultSet rs = null;
 		

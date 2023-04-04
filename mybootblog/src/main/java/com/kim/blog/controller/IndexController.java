@@ -14,9 +14,10 @@ import javax.servlet.http.HttpSession;
 import com.kim.blog.dao.BoardDAO;
 import com.kim.blog.dao.UserDAO;
 import com.kim.blog.dto.BoardDTO;
+import com.kim.blog.service.IndexService;
 
 
-@WebServlet("/IndexController")
+@WebServlet("/indexController")
 public class IndexController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -26,9 +27,7 @@ public class IndexController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-        BoardDAO dao = new BoardDAO();
-        UserDAO userdao = new UserDAO();
-        HttpSession session = request.getSession();
+		IndexService indexService = new IndexService(); 
         int pageNumber = 0;
         
         if(request.getParameter("pageNumber")!=null) {
@@ -43,8 +42,9 @@ public class IndexController extends HttpServlet {
         	}
         }
         
-        ArrayList<BoardDTO> result = dao.limitSelect(pageNumber);
-        ArrayList<BoardDTO> list = dao.select();
+        ArrayList<BoardDTO> result = indexService.limitSelect(pageNumber);
+        ArrayList<BoardDTO> list = indexService.select();
+        
         int listSize = list.size();
         
         request.setAttribute("list", result);
@@ -58,10 +58,10 @@ public class IndexController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		BoardDAO dao = new BoardDAO();
+		IndexService indexService = new IndexService();
 		String search = request.getParameter("search");
 		
-		ArrayList<BoardDTO> result = dao.selectbysearch(search);
+		ArrayList<BoardDTO> result = indexService.selectbysearch(search);
 		request.setAttribute("list", result);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");

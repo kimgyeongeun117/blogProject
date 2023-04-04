@@ -1,14 +1,13 @@
 package com.kim.blog.service;
 
-import com.kim.blog.dao.SignUpDAO;
+import com.kim.blog.dao.UserDAO;
 import com.kim.blog.dto.UserDTO;
 
 public class SignUpService {
-	
-	SignUpDAO dao;
+	UserDAO dao;
 
 	public SignUpService() {
-		dao = new SignUpDAO();
+		dao = new UserDAO();
 	}
 	
 	public int insertUser(String name,String email,String password,String phoneNumber){

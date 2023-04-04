@@ -7,7 +7,7 @@
 <c:if test="${empty username and empty password }">
 	out.println("<script>
 		alert('로그인이 필요합니다');
-		location.href = 'login.jsp'
+		location.href = 'LoginController'
 	</script>");
 </c:if>
 
@@ -20,26 +20,23 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Clean Blog - Blog List</title>
+<title>글 내용 페이지</title>
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-<!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
 	crossorigin="anonymous"></script>
-<!-- Google fonts-->
 <link
 	href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
 	rel="stylesheet" type="text/css" />
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
 	rel="stylesheet" type="text/css" />
-<!-- Core theme CSS (includes Bootstrap)-->
 <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body>
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
 		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="IndexController"><c:out
+			<a class="navbar-brand" href="indexController"><c:out
 					value="${username }" />의 게시판</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
@@ -50,18 +47,16 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ms-auto py-4 py-lg-0">
 					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-						href="IndexController">Home</a></li>
-					<!-- <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.jsp">About</a></li> -->
-					<!-- <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.jsp">Post</a></li> -->
+						href="indexController">Home</a></li>
 					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-						href="WriteController">Write</a></li>
+						href="writeController">Write</a></li>
 					<c:if test="${empty logstatus}">
 						<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-							href="login.jsp">login</a></li>
+							href="loginController">login</a></li>
 					</c:if>
 					<c:if test="${not empty logstatus}">
 						<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-							href="login.jsp">logout</a></li>
+							href="logoutController">logout</a></li>
 					</c:if>
 				</ul>
 			</div>
@@ -78,8 +73,6 @@
 							<c:out value="${title }" />
 						</h1>
 						<span class="meta"> Posted by <c:out value="${username }" />
-							<!-- <a href="#!">Start Bootstrap</a>
-                                on August 24, 2023 -->
 						</span>
 					</div>
 				</div>
@@ -91,13 +84,12 @@
 		<div class="container px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
-					<form action="UpdateController?action=updatebefore" method="post"
+					<form action="updateController" method="get"
 						style="display: flex; flex-direction: column;">
 						<p style="border: 1px solid gray; padding: 10px">
 							<c:out value="${description }" />
 						</p>
-						<input type="text" style="display: none" name="description"
-							value="${description }" /> <input type="text"
+						<input type="text"
 							style="display: none" name="board_id" value="${board_id }" />
 						<div style="display: flex; justify-content: flex-end">
 							<c:set var="board_user_id" value="${board_user_id }" />
@@ -107,22 +99,24 @@
 							</c:if>
 						</div>
 					</form>
-					<form action="DeleteController" method="post"
+					<form action="boardController"  method="get"
 						style="display: flex; justify-content: flex-end">
 						<c:if test="${board_user_id eq user_id }">
 							<input type="text" style="display: none" name="board_id"
 								value="${board_id }" />
+							<input type="text" style="display: none" name="action"
+								value="delete" />
 							<button class="btn btn-primary text-uppercase" id="submitButton"
 								type="submit"
 								style="margin: 10px 0px; background-color: #F82B55">삭제</button>
 						</c:if>
 					</form>
 
-					<p>댓글창</p>
+					<p style="font-style: italic;">댓글창</p>
 					<div class="card bg-light">
 						<div class="card-body">
 							<!-- Comment form-->
-							<form action="ReplyController?action=insert" method="post"
+							<form action="replyController?action=insert" method="post"
 								class="mb-4" style="display: flex; flex-direction: column;">
 								<textarea class="form-control" id="description" name="content"
 									placeholder="Enter your message here..." style="height: 6rem"
@@ -146,11 +140,12 @@
 										<div class="fw-bold">${list.userName }</div>
 										${list.content }
 									</div>
-									<form action="ReplyController?action=delete" method="post"
+									<form action="replyController" method="get"
 										style="flex: 1; display: flex; justify-content: flex-end;">
 										<input type="text" style="display: none" name="reply_id"
-											value="${list.id }" /> <input type="text"
-											style="display: none" name="board_id" value="${board_id }" />
+											value="${list.id }" /> 
+										<input type="text"style="display: none" name="board_id" value="${board_id }" />
+										<input type="text"style="display: none" name="action" value="delete" />
 										<c:if test="${list.user_id eq user_id }">
 											<button class="btn btn-primary text-uppercase"
 												id="submitButton" type="submit"
@@ -197,10 +192,8 @@
 			</div>
 		</div>
 	</footer>
-	<!-- Bootstrap core JS-->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-	<!-- Core theme JS-->
 	<script src="js/scripts.js"></script>
 </body>
 </html>

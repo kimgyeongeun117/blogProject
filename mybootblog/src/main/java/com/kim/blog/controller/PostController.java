@@ -15,9 +15,10 @@ import com.kim.blog.dao.PostDAO;
 import com.kim.blog.dao.ReplyDAO;
 import com.kim.blog.dto.BoardDTO;
 import com.kim.blog.dto.ReplyDTO;
+import com.kim.blog.service.PostService;
 
 
-@WebServlet("/PostController")
+@WebServlet("/postController")
 public class PostController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,18 +31,17 @@ public class PostController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String board_id = request.getParameter("board_id");
-		HttpSession session = request.getSession();
 		String action =request.getParameter("action");
+		HttpSession session = request.getSession();
 		
-		PostDAO dao = new PostDAO();
-		ReplyDAO replydao = new ReplyDAO();
+		PostService postService = new PostService();
 		
 		if(action.equals("view")) {
-			int updateResult = dao.update(Integer.parseInt(board_id)); 
+			int updateResult = postService.update(Integer.parseInt(board_id)); 
 		}
 		
-		BoardDTO dto =  dao.select(Integer.parseInt(board_id));
-		ArrayList<ReplyDTO> replyList = replydao.select(Integer.parseInt(board_id));
+		BoardDTO dto =  postService.select(Integer.parseInt(board_id));
+		ArrayList<ReplyDTO> replyList = postService.replyselect(Integer.parseInt(board_id));
 		
 		request.setAttribute("title", dto.getTitle());
 		request.setAttribute("description", dto.getDescription());
@@ -56,28 +56,8 @@ public class PostController extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String board_id = request.getParameter("board_id");
-		HttpSession session = request.getSession();
 		
-		PostDAO dao = new PostDAO();
-		ReplyDAO replydao = new ReplyDAO();
-		BoardDTO dto =  dao.select(Integer.parseInt(board_id));
-		ArrayList<ReplyDTO> replyList = replydao.select(Integer.parseInt(board_id));
-		
-		request.setAttribute("title", dto.getTitle());
-		request.setAttribute("description", dto.getDescription());
-		request.setAttribute("board_id", board_id);
-		request.setAttribute("board_user_id", dto.getUser_id());
-		request.setAttribute("category_id", dto.getCategory_id());
-		request.setAttribute("createdAt", dto.getCreatedAt());
-		request.setAttribute("user_id", session.getAttribute("user_id"));
-		request.setAttribute("replyList", replyList);
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("post.jsp");
-		dispatcher.forward(request, response);
 	}
 
 }

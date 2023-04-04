@@ -19,10 +19,9 @@ import com.kim.blog.dto.CategoryDTO;
 import com.kim.blog.service.WriteService;
 
 
-@WebServlet("/WriteController")
+@WebServlet("/writeController")
 public class WriteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
    
     public WriteController() {
     	
@@ -39,29 +38,7 @@ public class WriteController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession();
-		int responseCount = 0;
-		BoardDAO dao = new BoardDAO();
-		UserDAO userdao = new UserDAO();
 		
-		int user_id = (int)session.getAttribute("user_id");
-		String category_id = request.getParameter("category_id");
-		String action = request.getParameter("action");
-		String title = request.getParameter("title");
-		String description = request.getParameter("description");
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		String userName = userdao.selectbyuserid(user_id);
-		
-		if(action.equals("insert")) {
-			responseCount = dao.insert(userName,user_id,title,description,Integer.parseInt(category_id));
-			if(responseCount!=0) {
-				response.sendRedirect("IndexController");
-			}else {
-				out.print("<script>alert('글 작성에 실패했습니다'); location.href='WriteController'</script>");
-			}
-		}
 	}
 
 }

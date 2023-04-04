@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import com.kim.blog.dto.UserDTO;
 import com.kim.blog.service.LoginService;
 
-@WebServlet("/LoginController")
+@WebServlet("/loginController")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -23,13 +23,13 @@ public class LoginController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		LoginService loginService = new LoginService();
-		UserDTO userDto = null;
 		HttpSession session = request.getSession();
 		
 		String email = request.getParameter("email");
@@ -37,7 +37,7 @@ public class LoginController extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
-		userDto = loginService.selectUser(email, password);
+		UserDTO userDto = loginService.selectUser(email, password);
 		String logstatus = null;
 		if(userDto != null) {
 			String username = userDto.getName();
@@ -50,9 +50,9 @@ public class LoginController extends HttpServlet {
 			logstatus = "login";
 			session.setAttribute("logstatus", logstatus);
 			
-			response.sendRedirect("IndexController");
+			response.sendRedirect("indexController");
 		}else {
-			out.print("<script>alert('로그인에 실패했습니다'); location.href='login.jsp'</script>");
+			out.print("<script>alert('로그인에 실패했습니다'); location.href='loginController'</script>");
 		}
 		
 	}

@@ -25,7 +25,7 @@ public class BoardDAO implements IBoardDAO{
 		public ArrayList<BoardDTO> selectbysearch(String title) {
 			ArrayList<BoardDTO> list = new ArrayList<>();
 			
-			String strQuery = "select * from board where title like ? ";
+			String strQuery = "SELECT * FROM board WHERE title LIKE ? ";
 			PreparedStatement pStmt = null;
 			ResultSet rs = null;
 			
@@ -70,7 +70,7 @@ public class BoardDAO implements IBoardDAO{
 	public BoardDTO selectbyuser(int user_id,int id) {
 		BoardDTO dto = null;
 		
-		String strQuery = "select * from board where user_id = ? and id = ?; ";
+		String strQuery = "SELECT * FROM board WHERE user_id = ? AND id = ?; ";
 		PreparedStatement pStmt = null;
 		ResultSet rs = null;
 		
@@ -111,7 +111,7 @@ public class BoardDAO implements IBoardDAO{
 	public ArrayList<BoardDTO> limitSelect(int page) {
 		ArrayList<BoardDTO> list = new ArrayList<>();
 		
-		String strQuery = "select * from board order by id limit ?, 5; ";
+		String strQuery = "SELECT * FROM board ORDER BY id LIMIT ?, 5; ";
 		PreparedStatement pStmt = null;
 		ResultSet rs = null;
 		
@@ -154,7 +154,7 @@ public class BoardDAO implements IBoardDAO{
 	public ArrayList<BoardDTO> select() {
 		ArrayList<BoardDTO> list = new ArrayList<>();
 		
-		String strQuery = "select * from board; ";
+		String strQuery = "SELECT * FROM board; ";
 		PreparedStatement pStmt = null;
 		ResultSet rs = null;
 		
@@ -194,7 +194,7 @@ public class BoardDAO implements IBoardDAO{
 	@Override
 	public int insert(String userName, int user_id,String title, String description,int category_id) {
 		int resultCount = 0;
-		String queryStr = "INSERT into board(userName, user_id,title,description,category_id) values (?,?,?,?,?); ";
+		String queryStr = "INSERT INTO board(userName, user_id,title,description,category_id) VALUES (?,?,?,?,?); ";
 		PreparedStatement pStmt = null;
 		
 		try {
@@ -222,8 +222,8 @@ public class BoardDAO implements IBoardDAO{
 	@Override
 	public int update(int id,int user_id, String title, String description,int category_id) {
 		int resultRow = 0;
-		String queryStr = "update board set title = ?, description = ?, category_id = ? "
-				+ " where id=? and user_id=? ";
+		String queryStr = "UPDATE board SET title = ?, description = ?, category_id = ? "
+				+ " WHERE id=? AND user_id=? ";
 		PreparedStatement pStmt = null;
 		try {
 			pStmt = conn.prepareStatement(queryStr);
@@ -251,7 +251,7 @@ public class BoardDAO implements IBoardDAO{
 	@Override
 	public int delete(int id,int user_id) {
 		int resultRow = 0;
-		String queryStr = "delete from board where id = ? and user_id = ?; ";
+		String queryStr = "DELETE FROM board WHERE id = ? AND user_id = ?; ";
 		PreparedStatement pStmt = null;
 		
 		try {

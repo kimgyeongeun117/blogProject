@@ -4,7 +4,6 @@ import com.kim.blog.dao.LoginDAO;
 import com.kim.blog.dto.UserDTO;
 
 public class LoginService {
-
 	LoginDAO dao;
 	
 	public LoginService() {

@@ -21,7 +21,7 @@ public class LoginDAO {
 	public UserDTO select(String email,String password) {
 		UserDTO result = null;
 		
-		String strQuery = "select * from user where email=? and password=?  ";
+		String strQuery = "SELECT * FROM user WHERE email=? AND password=?  ";
 		PreparedStatement pStmt = null;
 		ResultSet rs = null;
 		

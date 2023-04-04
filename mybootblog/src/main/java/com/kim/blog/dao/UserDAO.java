@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import com.kim.blog.dto.UserDTO;
 import com.kim.blog.utils.DBHelper;
 
-public class UserDAO {
+public class UserDAO implements IUserDAO{
 
 	private Connection conn;
 	private DBHelper dbHelper;
@@ -21,7 +21,7 @@ public class UserDAO {
 	
 	public int insert(String name,String email, String password,String phoneNumber) {
 		int resultCount = 0;
-		String queryStr = "INSERT into user(name,email,password,phoneNumber) values (?,?,?,?); ";
+		String queryStr = "INSERT INTO user(name,email,password,phoneNumber) VALUES (?,?,?,?); ";
 		PreparedStatement pStmt = null;
 		
 		try {
@@ -49,7 +49,7 @@ public class UserDAO {
 	public UserDTO select(String name,String email) {
 		UserDTO result = null;
 		
-		String strQuery = "select * from user where name=? and email=?  ";
+		String strQuery = "SELECT * FROM user WHERE name=? AND email=?  ";
 		PreparedStatement pStmt = null;
 		ResultSet rs = null;
 		
@@ -69,7 +69,6 @@ public class UserDAO {
 				
 				UserDTO dto = new UserDTO(id,userName,userEmail,password,phoneNumber,createdAt);
 				result = dto;
-				System.out.println(result);
 			}
 			
 		} catch (Exception e) {
@@ -89,7 +88,7 @@ public class UserDAO {
 	//글작성 시에 유저아이디로 유저 이름만 찾기
 	public String selectbyuserid(int id) {
 		
-		String strQuery = "select name from user where id = ? ";
+		String strQuery = "SELECT name FROM user WHERE id = ? ";
 		PreparedStatement pStmt = null;
 		ResultSet rs = null;
 		

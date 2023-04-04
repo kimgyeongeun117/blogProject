@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import com.kim.blog.dto.ReplyDTO;
 import com.kim.blog.utils.DBHelper;
 
-public class ReplyDAO {
+public class ReplyDAO implements IReplyDAO{
 	
 	private Connection conn;
 	private DBHelper dbHelper;
@@ -21,7 +21,7 @@ public class ReplyDAO {
 	
 	public int insert(int board_id,String userName, String content,int user_id) {
 		int resultCount = 0;
-		String queryStr = "INSERT into reply(board_id,userName,content,user_id) values (?,?,?,?); ";
+		String queryStr = "INSERT INTO reply(board_id,userName,content,user_id) VALUES (?,?,?,?); ";
 		PreparedStatement pStmt = null;
 		
 		try {
@@ -48,7 +48,7 @@ public class ReplyDAO {
 	public ArrayList<ReplyDTO> select(int board_id) {
 		ArrayList<ReplyDTO> list = new ArrayList<>();
 		
-		String strQuery = "select * from reply where board_id = ?; ";
+		String strQuery = "SELECT * FROM reply WHERE board_id = ?; ";
 		PreparedStatement pStmt = null;
 		ResultSet rs = null;
 		
@@ -85,7 +85,7 @@ public class ReplyDAO {
 	
 	public int delete(int id,int user_id) {
 		int resultRow = 0;
-		String queryStr = "delete from reply where id = ? and user_id = ?; ";
+		String queryStr = "DELETE FROM reply WHERE id = ? AND user_id = ?; ";
 		PreparedStatement pStmt = null;
 		
 		try {

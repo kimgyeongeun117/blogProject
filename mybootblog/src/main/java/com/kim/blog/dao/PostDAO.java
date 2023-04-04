@@ -21,7 +21,7 @@ public class PostDAO {
 	public BoardDTO select(int id) {
 		BoardDTO dto = null;
 		
-		String strQuery = "select * from board where id = ?; ";
+		String strQuery = "SELECT * FROM board WHERE id = ?; ";
 		PreparedStatement pStmt = null;
 		ResultSet rs = null;
 		
@@ -60,8 +60,8 @@ public class PostDAO {
 	
 	public int update(int id) {
 		int resultRow = 0;
-		String queryStr = "update board set views = views + 1  "
-				+ " where id=? ";
+		String queryStr = "UPDATE board SET views = views + 1  "
+				+ " WHERE id=? ";
 		PreparedStatement pStmt = null;
 		try {
 			pStmt = conn.prepareStatement(queryStr);
@@ -69,6 +69,30 @@ public class PostDAO {
 			
 			resultRow = pStmt.executeUpdate();
 			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pStmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return resultRow;
+	}
+	
+	public int delete(int id,int user_id) {
+		int resultRow = 0;
+		String queryStr = "DELETE FROM board WHERE id = ? AND user_id = ?; ";
+		PreparedStatement pStmt = null;
+		
+		try {
+			pStmt = conn.prepareStatement(queryStr);
+			pStmt.setInt(1, id);
+			pStmt.setInt(2, user_id);
+			
+			resultRow =  pStmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

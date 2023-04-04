@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kim.blog.service.SignUpService;
 
-@WebServlet("/SignUpController")
+@WebServlet("/signUpController")
 public class SignUpController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -41,14 +41,13 @@ public class SignUpController extends HttpServlet {
 		// 같은 이메일,이름의 사용자가 없다면 생성 허가
 		if (signUpService.selectUser(name, email) == null) {
 			resultCount = signUpService.insertUser(name, email, password, phoneNumber);
-			System.out.println(resultCount);
 			if (resultCount != 0) {
-				response.sendRedirect("login.jsp");
+				response.sendRedirect("loginController");
 			} else {
-				out.print("<script>alert('계정 생성에 실패했습니다'); location.href='SignUpController'</script>");
+				out.print("<script>alert('계정 생성에 실패했습니다'); location.href='signUpController'</script>");
 			}
 		}else {
-			out.print("<script>alert('이미 존재하는 아이디 입니다.'); location.href='SignUpController'</script>");
+			out.print("<script>alert('이미 존재하는 아이디 입니다.'); location.href='signUpController'</script>");
 		}
 
 	}

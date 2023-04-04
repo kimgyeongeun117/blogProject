@@ -7,7 +7,7 @@
 <c:if test="${empty username and empty password }">
 	out.println("<script>
 		alert('로그인이 필요합니다');
-		location.href = 'login.jsp'
+		location.href = 'LoginController'
 	</script>");
 </c:if>
 
@@ -20,7 +20,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Clean Blog - Start Blog Theme</title>
+<title>메인 페이지</title>
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
@@ -41,7 +41,7 @@
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
 		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="IndexController"><c:out
+			<a class="navbar-brand" href="indexController"><c:out
 					value="${username }" />의 게시판</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
@@ -52,18 +52,16 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ms-auto py-4 py-lg-0">
 					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-						href="IndexController">Home</a></li>
-					<!-- <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.jsp">About</a></li> -->
-					<!-- <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.jsp">Post</a></li> -->
+						href="indexController">Home</a></li>
 					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-						href="WriteController">Write</a></li>
+						href="writeController">Write</a></li>
 					<c:if test="${empty logstatus}">
 						<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-							href="login.jsp">login</a></li>
+							href="loginController">login</a></li>
 					</c:if>
 					<c:if test="${not empty logstatus}">
 						<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-							href="logout.jsp">logout</a></li>
+							href="logoutController">logout</a></li>
 					</c:if>
 				</ul>
 			</div>
@@ -91,7 +89,7 @@
 	<nav class="navbar navbar-light" style="display: flex">
 		<div class="container-fluid"
 			style="justify-content: center; margin-bottom: 50px">
-			<form class="d-flex" action="IndexController" method="post">
+			<form class="d-flex" action="indexController" method="post">
 				<input class="form-control me-2" type="search" placeholder="Search"
 					name="search" aria-label="Search">
 				<button class="btn btn-outline-success" type="submit">Search</button>
@@ -104,7 +102,7 @@
 				<!-- Post preview  반복 필요-->
 				<c:forEach var="list" items="${list}" varStatus="status">
 					<div class="post-preview">
-						<a href="PostController?board_id=${list.id }&action=view">
+						<a href="postController?board_id=${list.id }&action=view">
 							<h2 class="post-title">${list.title }</h2>
 						</a>
 						<p class="post-meta">
@@ -118,16 +116,13 @@
 				<nav aria-label="Page navigation example">
 					<ul class="pagination">
 						<c:if test="${pageNumber - 5 ge 0}">
-							<li class="page-item"><a class="page-link" name="pageButton" href="IndexController?page=previous&pageNumber=${pageNumber}">이전</a></li>
+							<li class="page-item"><a class="page-link" name="pageButton" href="indexController?page=previous&pageNumber=${pageNumber}">이전</a></li>
 						</c:if>
 						<c:if test="${listSize gt pageNumber + 5}">
-						<li class="page-item"><a class="page-link"  name="pageButton" href="IndexController?page=next&pageNumber=${pageNumber}">다음</a></li>
+						<li class="page-item"><a class="page-link"  name="pageButton" href="indexController?page=next&pageNumber=${pageNumber}">다음</a></li>
 						</c:if>
 					</ul>
 				</nav>
-				<!-- Pager-->
-				<!-- post로 이동하는 버튼 -->
-				<!-- <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="post.jsp">Older Posts →</a></div> -->
 			</div>
 		</div>
 	</div>
@@ -162,10 +157,8 @@
 			</div>
 		</div>
 	</footer>
-	<!-- Bootstrap core JS-->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-	<!-- Core theme JS-->
 	<script src="js/scripts.js"></script>
 </body>
 </html>

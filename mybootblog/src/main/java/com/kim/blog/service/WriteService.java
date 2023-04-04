@@ -6,7 +6,6 @@ import com.kim.blog.dao.WriteDAO;
 import com.kim.blog.dto.CategoryDTO;
 
 public class WriteService {
-	
 	WriteDAO dao;
 	
 	public WriteService() {
