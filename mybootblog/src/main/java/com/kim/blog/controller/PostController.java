@@ -51,6 +51,7 @@ public class PostController extends HttpServlet {
 		request.setAttribute("createdAt", dto.getCreatedAt());
 		request.setAttribute("user_id", session.getAttribute("user_id"));
 		request.setAttribute("replyList", replyList);
+		request.setAttribute("boardUserName", dto.getUserName());
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("post.jsp");
 		dispatcher.forward(request, response);

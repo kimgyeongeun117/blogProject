@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:if test="${empty username and empty password }">
-	out.println("<script>alert('로그인이 필요합니다'); location.href='LoginController'</script>");
+	out.println("<script>alert('로그인이 필요합니다'); location.href='loginController'</script>");
 </c:if>
 
 <!-- 글작성 -->

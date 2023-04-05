@@ -7,7 +7,7 @@
 <c:if test="${empty username and empty password }">
 	out.println("<script>
 		alert('로그인이 필요합니다');
-		location.href = 'LoginController'
+		location.href = 'loginController'
 	</script>");
 </c:if>
 
